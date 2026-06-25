@@ -10,9 +10,11 @@ const uniqueIndexFieldsByModel: Record<string, string[]> = {};
 Prisma.dmmf.datamodel.models.forEach((model) => {
   // add unique fields derived from indexes
   const uniqueIndexFields: string[] = [];
-  model.uniqueFields.forEach((field) => {
-    uniqueIndexFields.push(field.join("_"));
-  });
+  if (model?.uniqueFiels) {
+    model.uniqueFields.forEach((field) => {
+      uniqueIndexFields.push(field.join("_"));
+    });
+  }
   uniqueIndexFieldsByModel[model.name] = uniqueIndexFields;
 
   // add id field and unique fields from @unique decorator
